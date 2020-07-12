@@ -33,7 +33,7 @@
                 <form>
                   <div class="form-group">
                     <label for="exampleInputEmail1">Username</label>
-                    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Username">
+                    <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Username">
                     <i class="mdi mdi-account"></i>
                   </div>
                   <div class="form-group">
@@ -42,7 +42,7 @@
                     <i class="mdi mdi-eye"></i>
                   </div>
                   <div class="mt-5">
-                    <a class="btn btn-block btn-warning btn-lg font-weight-medium" href="../index.html">Login</a>
+                    <a id="btnLogin" class="btn btn-block btn-warning btn-lg font-weight-medium">Login</a>
                   </div>
                 </form>
               </form>
@@ -65,6 +65,29 @@
   <script src="../js/off-canvas.js"></script>
   <script src="../js/hoverable-collapse.js"></script>
   <script src="../js/misc.js"></script>
+
+    <script src="../js/jquery-3.5.1.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#btnLogin').click(function () {
+                $.ajax({
+                    url: 'https://localhost:44394/api/User/LoginAsync',
+                    method: 'POST',
+
+                    contentType: 'application/json',
+                    data: JSON.stringify({
+                        userName: $('#exampleInputEmail1').val(),
+                        password: $('#exampleInputPassword1').val()
+                    }),
+                    // Khi đăng nhập thành công, lưu token vào sessionStorage
+                    success: function (response) {
+                        localStorage.setItem("accessToken", response);
+                        window.location.href = "index.html";
+                    }
+                });
+            });
+        });
+    </script>
   <!-- endinject -->
 </body>
 
